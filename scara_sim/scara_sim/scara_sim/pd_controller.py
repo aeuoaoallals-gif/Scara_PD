@@ -65,11 +65,11 @@ class PDControllerNode(Node):
             10
         )
 
-        # Частота цикла управления (200 Гц)
+        # Частота цикла управления (1000 Гц)
         self.control_dt = 0.001
         self.timer = self.create_timer(self.control_dt, self.control_loop)
         
-        # ИСПРАВЛЕНИЕ №2: сохраняем время один раз
+
         now_msg = self.get_clock().now().to_msg()
         self.start_time = now_msg.sec + now_msg.nanosec * 1e-9
         
@@ -92,7 +92,6 @@ class PDControllerNode(Node):
         if not self.joint_state_received:
             return
 
-        # ИСПРАВЛЕНИЕ №2: сохраняем время один раз
         now_msg = self.get_clock().now().to_msg()
         now = now_msg.sec + now_msg.nanosec * 1e-9
         current_time = now - self.start_time
@@ -104,7 +103,6 @@ class PDControllerNode(Node):
         q1_ref = np.interp(current_time, self.time_array, self.q1_ref_array)
         q2_ref = np.interp(current_time, self.time_array, self.q2_ref_array)
 
-        # ИСПРАВЛЕНИЕ №1: вычисляем эталонные скорости через численное дифференцирование
         dt_small = 0.0001
         t_prev = max(0, current_time - dt_small)
         t_next = min(self.time_array[-1], current_time + dt_small)
@@ -125,7 +123,6 @@ class PDControllerNode(Node):
         error_q1_dot = q1_dot_ref - self.current_q1_dot
         error_q2_dot = q2_dot_ref - self.current_q2_dot
 
-        # ИСПРАВЛЕНИЕ №1: полный ПД-регулятор с учётом эталонной скорости
         effort1 = self.kp1 * error_q1 + self.kd1 * error_q1_dot
         effort2 = self.kp2 * error_q2 + self.kd2 * error_q2_dot
 
