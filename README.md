@@ -1,33 +1,32 @@
-Создание репозитория
-'''bash
-mkdir -p ~/ros2_ws/src
-cd ~/ros2_ws/src
+## Install and Start
 
+1. Download pkg
+
+```bash
+mkdir -p some_ws/src
+cd some_ws/src
 git clone https://github.com/aeuoaoallals-gif/Scara_PD.git
-'''
+mv Scara_PD/scara_sim/scara_sim ./scara_sim
+rm -rf Scara_PD
+```
 
-Сборка и запуск.
+2. Build
 
-1 Терминал
+```bash
+cd ..
+colcon build --symlink-install && source install/local_setup.bash
+```
 
-'git clone https://github.com/aeuoaoallals-gif/Scara_PD.git'
-'cd ~/ros2_ws'
-'rosdep update'
-'rosdep install -i --from-path src --rosdistro humble -y'
+3. Launch simulation
 
-'colcon build --packages-select scara_sim'
+```bash
+ros2 launch scara_sim scara_sim.launch.py
+```
 
-'ros2 launch scara_sim scara_sim.launch.py'
+4. Run effort commands. In the new terminal:
 
-
-
-2 Терминал
-
-source install/setup.bash
-
+```bash
+cd some_ws
+source install/local_setup.bash
 ros2 launch scara_sim effort_publisher.launch.py
-
-
-
-
-
+```
