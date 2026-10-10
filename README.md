@@ -1,10 +1,10 @@
 Создание репозитория
+'''bash
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws/src
 
-'mkdir -p ~/ros2_ws/src'
-'cd ~/ros2_ws/src'
-
-'git clone https://github.com/aeuoaoallals-gif/Scara_PD.git'
-
+git clone https://github.com/aeuoaoallals-gif/Scara_PD.git
+'''
 
 Сборка и запуск.
 
