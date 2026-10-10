@@ -140,7 +140,6 @@ class MotorModelNode(Node):
             omega_motor_real2 = self.q2_dot * self.i_gear
 
             # --- ДВИГАТЕЛЬ 1 ---
-                        # --- ДВИГАТЕЛЬ 1 ---
             U_eff1 = self.U1 - self.K_e * omega_motor_real1
             dM_dv1 = ((self.K_m / self.R) * U_eff1 - self.M_dv1) / self.tau_e
             self.M_dv1 += dM_dv1 * self.dt
@@ -148,8 +147,7 @@ class MotorModelNode(Node):
             M_sum1 = self.M_dv1 - M_n_motor1
             domega1 = M_sum1 / J_total1
             self.omega1 += domega1 * self.dt
-            
-            # ИСПРАВЛЕНИЕ: На редуктор передается полный электромагнитный момент двигателя
+          
             M_out_motor1 = self.M_dv1  # Было: M_sum1
 
             # --- ДВИГАТЕЛЬ 2 ---
@@ -161,7 +159,6 @@ class MotorModelNode(Node):
             domega2 = M_sum2 / J_total2
             self.omega2 += domega2 * self.dt
             
-            # ИСПРАВЛЕНИЕ: Аналогично для второго двигателя
             M_out_motor2 = self.M_dv2  # Было: M_sum2
 
             # Публикация корректного момента на суставы
