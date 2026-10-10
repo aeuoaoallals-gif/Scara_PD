@@ -38,13 +38,11 @@ def ik(x: float, y: float, q_prev: Tuple[float, float]) -> Tuple[float, float]:
     return q1_new, q2_new
 
 # ------------------------- Генерация траектории -------------------------
-# ------------------------- Генерация траектории -------------------------
+
 def generate_trajectory(segments: List[Segment], dt: float = 0.001) -> List[TrajectoryPoint]:
     points: List[TrajectoryPoint] = []
     current_t = 0.0
     
-    # ИСПРАВЛЕНИЕ: Используем реальные начальные углы из URDF (joint1 и joint2),
-    # а не (0.0, 0.0). Это предотвращает скачок ветви IK при смене квадранта.
     q1_urdf_start = 0.649437
     q2_urdf_start = 1.036608
     
@@ -78,7 +76,7 @@ def generate_trajectory(segments: List[Segment], dt: float = 0.001) -> List[Traj
             x = x_start + xdot * tau
             y = y_start + ydot * tau
             
-            # ВАЖНО: передаём текущие q1, q2 как предыдущее состояние (ваша оригинальная логика)
+            # ВАЖНО: передаём текущие q1, q2 как предыдущее состояние
             q1, q2 = ik(x, y, (q1, q2))
             
             points.append(TrajectoryPoint(
@@ -114,7 +112,7 @@ STAR_POINTS: List[Tuple[float, float]] = [
 def main():
     seg_duration = 3.0  # секунд на каждый сегмент
     
-    # Формируем сегменты: каждая точка -> следующая, последняя -> первая (замыкание)
+    
     segments: List[Segment] = []
     for i in range(len(STAR_POINTS)):
         p_start = STAR_POINTS[i]
