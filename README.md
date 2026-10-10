@@ -6,8 +6,6 @@
 mkdir -p some_ws/src
 cd some_ws/src
 git clone https://github.com/aeuoaoallals-gif/Scara_PD.git
-mv Scara_PD/scara_sim/scara_sim ./scara_sim
-rm -rf Scara_PD
 ```
 
 2. Build
